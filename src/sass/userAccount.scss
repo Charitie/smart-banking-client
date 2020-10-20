@@ -1,0 +1,165 @@
+.account-container {
+	background-color: $color-grey-dark;
+	height: 100vh;
+	width: 100vw;
+	padding-top: 10rem;
+
+	@media only screen and (max-width: 767px) {
+		padding-top: 0;
+	}
+
+	.form {
+		background-size: cover;
+		background-position: center;
+		box-shadow: 3px 3px 1rem rgba(#000, 0.9);
+		margin: 0 auto;
+		border-radius: 1rem;
+		padding: 1rem 4rem;
+
+		&--register {
+			width: 55%;
+			height: 90%;
+			background-image: linear-gradient(
+					105deg,
+					rgba(206, 127, 0, 0.9) 0%,
+					rgba(206, 127, 0, 0.7) 60%,
+					transparent 60%
+				),
+				url("../assets/bg2.jpeg");
+
+			@media only screen and (max-width: 1100px) {
+				background-image: linear-gradient(
+						100deg,
+						rgba(206, 127, 0, 0.9) 0%,
+						rgba(206, 127, 0, 0.7) 65%,
+						transparent 65%
+					),
+					url("../assets/bg2.jpeg");
+			}
+			@media only screen and (max-width: 999px) {
+				background-image: linear-gradient(
+						100deg,
+						rgba(206, 127, 0, 0.9) 0%,
+						rgba(206, 127, 0, 0.7) 100%,
+						transparent 100%
+					),
+					url("../assets/bg2.jpeg");
+			}
+		}
+
+		&--login {
+			width: 50%;
+			height: 70%;
+			background-image: linear-gradient(
+					105deg,
+					rgba(206, 127, 0, 0.9) 0%,
+					rgba(206, 127, 0, 0.7) 60%,
+					transparent 60%
+				),
+				url("../assets/bg3.jpeg");
+
+			@media only screen and (max-width: 1100px) {
+				background-image: linear-gradient(
+						100deg,
+						rgba(206, 127, 0, 0.9) 0%,
+						rgba(206, 127, 0, 0.7) 65%,
+						transparent 65%
+					),
+					url("../assets/bg3.jpeg");
+			}
+
+			@media only screen and (max-width: 999px) {
+				background-image: linear-gradient(
+						100deg,
+						rgba(206, 127, 0, 0.9) 0%,
+						rgba(206, 127, 0, 0.7) 100%,
+						transparent 100%
+					),
+					url("../assets/bg3.jpeg");
+			}
+		}
+
+		&__title {
+			font-size: 2.5rem;
+			padding: 2rem;
+		}
+
+		&__group {
+			padding-top: 2rem;
+			display: flex;
+			flex-direction: column;
+			font-size: 1.6rem;
+		}
+
+		&__label {
+			padding-bottom: 1rem;
+			padding-left: 0.5rem;
+			color: $color-black;
+			font-weight: 600;
+		}
+
+		&__input {
+			padding: 1.5rem 2rem;
+			border-radius: 0.3rem;
+			border: none;
+			width: 50%;
+
+			@media only screen and (max-width: 999px) {
+				width: 85%;
+				padding-left: 4rem;
+			}
+
+			&:focus {
+				outline: none;
+				border-bottom: 0.3rem solid $color-grey-dark;
+				box-shadow: 0 1rem 1rem rgba($color-black, 0.3);
+			}
+		}
+
+		&__button {
+			border: none;
+			border-radius: 1rem;
+			width: 25%;
+			padding: 1rem 1.5rem;
+			background-color: $color-grey-dark;
+			color: $color-white;
+			font-size: 2rem;
+			font-weight: 600;
+			margin: 1rem 0;
+			transition: all 0.5s;
+
+			@media only screen and (max-width: 450px) {
+				width: 40%;
+			}
+
+			&:focus {
+				outline: none;
+			}
+
+			&:hover {
+				background-color: $color-white;
+				color: $color-grey-dark;
+				transition: all 0.5s;
+			}
+		}
+
+		&__link {
+			text-decoration: none;
+			color: $color-white;
+			&:hover {
+				color: $color-grey-dark;
+			}
+		}
+
+		@media only screen and (max-width: 767px) {
+			width: 100%;
+			height: 100%;
+			border-radius: 0;
+			padding: 1rem 2rem;
+		}
+
+		@media (max-width: 767px) and (min-width: 590px) {
+			padding: 4rem 10rem;
+		}
+	}
+}

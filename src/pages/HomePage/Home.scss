@@ -1,0 +1,27 @@
+@import "../../App.scss";
+
+.home-container {
+	background-color: $color-grey-light;
+	height: 100vh;
+	width: 100vw;
+	font-size: 1.6rem;
+	padding-bottom: 2rem;
+	position: relative;
+
+	display: grid;
+	grid-template-columns: minmax(28rem, 25vw) minmax(30rem, 1fr) minmax(
+			25rem,
+			25vw
+		);
+	grid-template-rows: 10vh repeat(2, 1fr);
+	gap: 2vw;
+
+	@media only screen and (max-width: 550px){
+		gap: 0;
+		padding-bottom: 0;
+	}
+	h2 {
+		color: $color-gold;
+		padding-bottom: 1rem;
+	}
+}

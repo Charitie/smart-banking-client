@@ -1,0 +1,118 @@
+@import "../../App.scss";
+
+.landing-container {
+	background-image: linear-gradient(
+			to top,
+			rgba(0, 0, 0, 0.4),
+			rgba(0, 0, 0, 0.8)
+		),
+		url(../../assets/bg.jpeg);
+	background-position: center;
+	background-size: cover;
+
+	color: $color-white;
+	font-size: 1.6rem;
+	height: 100vh;
+	width: 100vw;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0 4rem;
+
+	@media only screen and (max-width: 767px) {
+		flex-direction: column;
+		padding: 2rem 0;
+	}
+
+	.landing {
+		&__card {
+			animation: moveInLeft 0.8s ease-out 0.75s;
+			padding-right: 7rem;
+
+			img {
+				height: 65vh;
+				box-shadow: 0 0 2rem rgba($color-black, 0.6);
+
+				@media only screen and (max-width: 767px) {
+					display: none;
+				}
+			}
+		}
+
+		&__intro {
+			padding-top: 4rem;
+
+			@media only screen and (max-width: 899px) {
+				padding-top: 1.52rem;
+			}
+
+			@media only screen and (max-width: 767px) {
+				padding: 0 4rem;
+			}
+			@media only screen and (max-width: 550px) {
+				padding: 0 2rem;
+			}
+
+			&--title {
+				font-size: 6rem;
+				padding: 2rem 0;
+				animation: moveInRight 0.8s ease-out 0.75s;
+
+				@media only screen and (max-width: 899px) {
+					font-size: 5rem;
+				}
+				@media only screen and (max-width: 550px) {
+					font-size: 3rem;
+				}
+			}
+
+			&--text {
+				font-size: 2rem;
+				padding-bottom: 6rem;
+				padding-left: 2rem;
+				font-weight: 400;
+				@media only screen and (max-width: 550px) {
+					font-size: 1.7rem;
+				}
+			}
+		}
+	}
+
+	.btn {
+		&:link,
+		&:visited {
+			padding: 1.8rem 6rem;
+			border-radius: 3rem;
+			border: none;
+			font-size: 2.5rem;
+			background-color: $color-gold;
+			color: $color-white;
+			font-weight: 700;
+			text-decoration: none;
+			display: inline-block;
+			position: relative;
+			transition: all 0.5s;
+
+			@media only screen and (max-width: 550px) {
+				padding: 1rem 4rem;
+				font-size: 2.2rem;
+			}
+		}
+
+		&:hover {
+			transform: translateY(-0.4rem);
+			box-shadow: 0 1rem 2rem rgba($color-black, 0.6);
+			background-color: $color-white;
+			color: $color-gold;
+			border: 1px solid $color-gold;
+		}
+
+		&:active,
+		&:focus {
+			outline: none;
+			transform: translateY(-0.3rem);
+			box-shadow: 0 1rem 2rem rgba($color-black, 0.6);
+		}
+	}
+}

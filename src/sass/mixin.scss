@@ -1,0 +1,26 @@
+@mixin logout-button {
+	margin-top: 4rem;
+	background-color: $color-gold;
+	border-radius: 3rem;
+	width: 40%;
+	text-align: center;
+	padding: 1.5rem 4rem;
+	font-size: 2rem;
+	font-weight: 600;
+	transition: all ease-in-out 0.5s;
+
+	&:hover {
+		background-color: $color-gold-light;
+		border: 0.1rem solid $color-gold;
+	}
+}
+.link {
+	text-decoration: none;
+	color: $color-white;
+	transition: all ease-in-out 0.5s;
+	text-transform: capitalize;
+
+	&:hover {
+		color: orangered;
+	}
+}

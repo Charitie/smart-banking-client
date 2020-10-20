@@ -1,0 +1,52 @@
+@import "../../App.scss";
+
+.home {
+	&__header {
+		grid-column: 1 / -1;
+
+		background-color: $color-grey-dark;
+		padding: 0 4rem;
+		text-transform: uppercase;
+
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		@media only screen and (max-width: 850px) {
+			width: 100vw;
+			justify-content: space-between;
+
+			&--title {
+				margin: 0 auto;
+				padding-left: 2rem;
+			}
+		}
+
+		.close-button {
+			fill: $color-gold;
+
+			@media only screen and (min-width: 851px) {
+				display: none;
+			}
+		}
+
+		&--title {
+			color: $color-gold;
+			font-size: 3rem;
+
+			@media only screen and (max-width: 450px) {
+				font-size: 2.5rem;
+			}
+		}
+
+		&--logout {
+			@include logout-button;
+			width: 100%;
+			margin-top: 0;
+
+			@media only screen and (max-width: 850px) {
+				display: none;
+			}
+		}
+	}
+}

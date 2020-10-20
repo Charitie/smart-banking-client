@@ -1,0 +1,104 @@
+@import "../../App.scss";
+
+.home {
+	&__transaction-point {
+		grid-row: 2 / -1;
+
+		background-color: $color-white;
+		padding: 4rem;
+		box-shadow: 0 0.1rem 1rem rgba($color-black, 0.2);
+
+		@media only screen and (max-width: 1050px) {
+			width: 60vw;
+			margin-right: 1rem;
+		}
+
+		@media only screen and (max-width: 850px) {
+			width: 90vw;
+			margin: 2rem;
+
+			.transaction {
+				margin-right: 6rem;
+			}
+		}
+
+		@media only screen and (max-width: 550px) {
+			margin: 0;
+			width: 100vw;
+
+			.transaction {
+				margin-right: 0;
+			}
+		}
+
+		.transaction {
+			margin-top: 1rem;
+			padding: 2rem 0;
+
+			label {
+				display: inline-block;
+				padding-bottom: 2rem;
+			}
+
+			&__action {
+				display: flex;
+				font-size: 1.6rem;
+
+				span {
+					background-color: $color-grey-light;
+					padding: 1rem 2rem;
+					border-bottom-left-radius: 1rem;
+					border-top-left-radius: 1rem;
+					border: 0.1rem solid $color-gold;
+				}
+
+				input {
+					padding: 1rem 4rem;
+					border: 0.1rem solid $color-gold;
+					font-size: 1.7rem;
+					width: 60%;
+
+					@media only screen and (max-width: 550px) {
+						padding: 1rem;
+					}
+
+					&:focus {
+						outline: none;
+					}
+				}
+
+				.submit-button {
+					background-color: $color-gold;
+					border-bottom-right-radius: 1rem;
+					border-top-right-radius: 1rem;
+					transition: all ease-in-out 0.5s;
+					width: 25%;
+					padding: 0 0.8rem;
+
+					@media only screen and (max-width: 550px) {
+						width: 35%;
+					}
+					&:hover {
+						background-color: $color-gold-light;
+					}
+				}
+
+				.transfer-input {
+					&__account-number {
+						width: 100%;
+						border-bottom-right-radius: 1rem;
+						border-top-right-radius: 1rem;
+						width: 84%;
+					}
+
+					&__amount {
+					}
+				}
+
+				&--account-input {
+					margin-bottom: 2rem;
+				}
+			}
+		}
+	}
+}
