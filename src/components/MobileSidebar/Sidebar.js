@@ -1,29 +1,24 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { logout } from "../../redux/actions/authActions";
-import { getBalance } from "../../redux/actions/accountActions";
-import profile from "../../assets/profile.jpeg";
 import { ReactComponent as CloseMenu } from "../../assets/SVG/cancel-circle.svg";
 import "./Sidebar.scss";
 import { Link } from "react-router-dom";
+import { ReactComponent as UserProfile } from "../../assets/SVG/user.svg";
 
 const Sidebar = ({
 	close,
 	open,
 	logout,
 	user: { email, fullname },
-	getBalance,
+	balance
 }) => {
 	let classes = "mobile-sidebar";
 	if (open) {
 		classes = "mobile-sidebar open";
 	}
-
-	useEffect(() => {
-		getBalance();
-	}, []);
 
 	return (
 		<div className={classes}>
@@ -34,7 +29,7 @@ const Sidebar = ({
 				</div>
 				<div className='mobile__profile-details'>
 					<div className='profile'>
-						<img src={profile} alt='profile' />
+						<UserProfile className='user-profile' />
 					</div>
 					<div className='user-details'>
 						<span>{fullname}</span>
@@ -48,7 +43,7 @@ const Sidebar = ({
 					<b>Currency Type:</b> USD
 				</div>
 				<div className='home__account-info--item'>
-					<b>Account Balance:</b> $ 0.00
+					<b>Account Balance:</b> $ {balance}
 				</div>
 			</div>
 			<Link className='link' to='/'>
@@ -69,4 +64,4 @@ const mapStateToProps = (state) => ({
 	balance: state.account.balance,
 });
 
-export default connect(mapStateToProps, { logout, getBalance })(Sidebar);
+export default connect(mapStateToProps, { logout })(Sidebar);

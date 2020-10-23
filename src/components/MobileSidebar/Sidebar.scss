@@ -51,11 +51,12 @@
 			}
 
 			.profile {
-				img {
-					width: 15rem;
-					height: 15rem;
-					border-radius: 50%;
-					object-fit: cover;
+				.user-profile {
+					@include user-profle;
+					&:hover {
+						width: 15rem;
+						height: 15rem;
+					}
 				}
 			}
 

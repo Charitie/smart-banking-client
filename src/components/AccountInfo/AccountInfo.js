@@ -4,10 +4,10 @@ import { getBalance } from "../../redux/actions/accountActions";
 import "./AccountInfo.scss";
 
 const AccountInfo = ({ balance , getBalance}) => {
-	
+
 	useEffect(() => {
 		getBalance();
-	}, []);
+	}, [getBalance]);
 
 	return (
 		<div className='home__account-info'>
