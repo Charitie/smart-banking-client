@@ -1,14 +1,14 @@
 import React from "react";
-import profile from "../../assets/profile.jpeg";
 import "./UserInfo.scss";
 import { connect } from "react-redux";
+import { ReactComponent as UserProfile } from "../../assets/SVG/user.svg";
 
 const UserInfo = ({ user: { email, fullname } }) => {
 	return (
 		<div className='home__user-info'>
 			<h2>Account Profile</h2>
 			<div className='profile'>
-				<img src={profile} alt='profile' />
+				<UserProfile className='user-profile' />
 			</div>
 			<div className='user-details'>
 				<span>

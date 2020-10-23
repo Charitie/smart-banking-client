@@ -1,4 +1,4 @@
-@import '../../App.scss';
+@import "../../App.scss";
 
 .home {
 	&__user-info {
@@ -11,22 +11,19 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: space-between;
+		justify-content: space-around;
 
-		@media only screen and (max-width: 1200px){
-      margin-left: 2rem;
+		@media only screen and (max-width: 1200px) {
+			margin-left: 2rem;
 		}
 
-		@media only screen and (max-width: 850px){
+		@media only screen and (max-width: 850px) {
 			display: none;
 		}
 
 		.profile {
-			img {
-				width: 15rem;
-				height: 15rem;
-				border-radius: 50%;
-				object-fit: cover;
+			.user-profile {
+				@include user-profle;
 			}
 		}
 
