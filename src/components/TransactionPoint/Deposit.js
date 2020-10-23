@@ -1,8 +1,19 @@
 import React, { useState } from "react";
-import { Form } from "semantic-ui-react";
+import { connect } from "react-redux";
+import Modal from "../Modal/Modal";
+import { closeModal } from "../../redux/actions/modalActions";
+import { renderError } from '../RenderError';
 
-const Deposit = ({ deposit, alerts, loading }) => {
-	const [amount, setAmount] = useState('');
+const Deposit = ({
+	deposit,
+	openModal,
+	closeModal,
+	message,
+	depositAmount,
+	error,
+}) => {
+	const [amount, setAmount] = useState("");
+
 
 	const handleChange = (event) => {
 		setAmount(event.target.value);
@@ -12,15 +23,20 @@ const Deposit = ({ deposit, alerts, loading }) => {
 		event.preventDefault();
 
 		deposit({ amount });
-		setAmount('');
+
+		setAmount("");
 	};
 
 	return (
 		<div className='transaction'>
+			{openModal ? (
+				<Modal amount={depositAmount} close={closeModal} message={message} />
+			) : (
+				""
+			)}
+			{renderError(error, 'deposit')}
 			<label>Deposit</label>
-			<Form
-				onSubmit={handleSumit}
-				className='transaction__action'>
+			<form onSubmit={handleSumit} className='transaction__action'>
 				<span>$ </span>
 				<input
 					type='number'
@@ -28,11 +44,19 @@ const Deposit = ({ deposit, alerts, loading }) => {
 					name='amount'
 					value={amount}
 					onChange={handleChange}
+					required
 				/>
 				<input className='submit-button' type='submit' value='Deposit' />
-			</Form>
+			</form>
 		</div>
 	);
 };
 
-export default Deposit;
+const mapStateToProps = (state) => ({
+	openModal: state.modal.openDeposit,
+	message: state.account.message,
+	depositAmount: state.account.amount,
+	error: state.account.error,
+});
+
+export default connect(mapStateToProps, { closeModal })(Deposit);
