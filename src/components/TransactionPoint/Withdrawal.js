@@ -1,7 +1,18 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import Modal from "../Modal/Modal";
+import { closeModal } from "../../redux/actions/modalActions";
+import { renderError } from "../RenderError/index";
 
-const Withdrawal = ({ withdraw }) => {
-	const [amount, setAmount] = useState('');
+const Withdrawal = ({
+	withdraw,
+	openModal,
+	withdrawal,
+	closeModal,
+	message,
+	error,
+}) => {
+	const [amount, setAmount] = useState("");
 
 	const handleChange = (event) => {
 		setAmount(event.target.value);
@@ -11,11 +22,17 @@ const Withdrawal = ({ withdraw }) => {
 		event.preventDefault();
 
 		withdraw({ amount });
-		setAmount('');
+		setAmount("");
 	};
-
+	
 	return (
 		<div className='transaction'>
+			{openModal ? (
+				<Modal amount={withdrawal} close={closeModal} message={message} />
+			) : (
+				""
+			)}
+			{renderError(error, "withdraw")}
 			<label>Withdrawal</label>
 			<form onSubmit={handleSumit} className='transaction__action'>
 				<span>$ </span>
@@ -24,6 +41,7 @@ const Withdrawal = ({ withdraw }) => {
 					placeholder='Enter Amount'
 					onChange={handleChange}
 					value={amount}
+					required
 				/>
 				<input className='submit-button' type='submit' value='Withdrawal' />
 			</form>
@@ -31,4 +49,11 @@ const Withdrawal = ({ withdraw }) => {
 	);
 };
 
-export default Withdrawal;
+const mapStateToProps = (state) => ({
+	openModal: state.modal.openWithdraw,
+	message: state.account.message,
+	withdrawal: state.account.amount,
+	error: state.account.error,
+});
+
+export default connect(mapStateToProps, { closeModal })(Withdrawal);
