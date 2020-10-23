@@ -1,6 +1,18 @@
 import React, { useState } from "react";
+import { renderError } from "../RenderError";
+import { closeModal } from "../../redux/actions/modalActions";
+import Modal from "../Modal/Modal";
+import { connect } from "react-redux";
 
-const Transfer = ({ transfer }) => {
+const Transfer = ({
+	transfer,
+	transferAmount,
+	message,
+	error,
+	openModal,
+	closeModal,
+	toAccountNumber,
+}) => {
 	const [amount, setAmount] = useState("");
 	const [toAccount, setToAccount] = useState("");
 
@@ -14,6 +26,18 @@ const Transfer = ({ transfer }) => {
 
 	return (
 		<form onSubmit={handleSumit} className='transaction'>
+			{openModal ? (
+				<Modal
+					amount={transferAmount}
+					close={closeModal}
+					message={message}
+					accountNumber={toAccountNumber}
+				/>
+			) : (
+				""
+			)}
+			{renderError(error, "transfer")}
+
 			<label>Transfer Money</label>
 			<div className='transaction__action transaction__action--account-input'>
 				<span>To</span>
@@ -24,6 +48,7 @@ const Transfer = ({ transfer }) => {
 					name='toAccount'
 					value={toAccount}
 					onChange={(event) => setToAccount(event.target.value)}
+					required
 				/>
 			</div>
 
@@ -31,7 +56,7 @@ const Transfer = ({ transfer }) => {
 				<span>$ </span>
 				<input
 					className='transfer-input__amount'
-					type='number'
+					type='text'
 					placeholder='Enter Amount'
 					name='name'
 					value={amount}
@@ -43,4 +68,12 @@ const Transfer = ({ transfer }) => {
 	);
 };
 
-export default Transfer;
+const mapStateToProps = (state) => ({
+	openModal: state.modal.openTransfer,
+	message: state.account.message,
+	transferAmount: state.account.amount,
+	toAccountNumber: state.account.accountNumber,
+	error: state.account.error,
+});
+
+export default connect(mapStateToProps, { closeModal })(Transfer);
