@@ -1,5 +1,7 @@
 import { axiosInstance } from "../../util/axiosInstance";
 import {
+	LOGIN_REQUEST,
+	REGISTER_REQUEST,
 	REGISTER_SUCCESS,
 	REGISTER_FAIL,
 	LOGIN_FAIL,
@@ -9,6 +11,10 @@ import {
 import { setAlert } from "./alertaction";
 
 //register new user
+export const userRegisterRequest = () => {
+	return { type: REGISTER_REQUEST };
+};
+
 export const userRegisterSuccess = (user) => {
 	return { type: REGISTER_SUCCESS, payload: user };
 };
@@ -20,27 +26,30 @@ export const userRegisterFailed = (error) => {
 	};
 };
 
-export const register = (user) => {
-	return async (dispatch) => {
+export const register = (user) =>  async (dispatch) => {
+		dispatch(userRegisterRequest())
 		try {
 			const response = await axiosInstance.post("/users/register", user);
 
 			dispatch(userRegisterSuccess(response.data.user));
 		} catch (error) {
 			const errors = error.response.data.errors;
-			const err = error.response.data.error;
+			const err = error.response.data.message;
 
 			if (errors) {
-				errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+				errors.forEach((error) => dispatch(setAlert(error.msg, "register")));
 			} else if (err) {
-				dispatch(setAlert(err, "danger"));
+				dispatch(setAlert(err, "register"));
 			}
 			dispatch(userRegisterFailed(error.response.data));
 		}
 	};
-};
 
 //Login user
+export const userLoginRequest = () => {
+	return { type: LOGIN_REQUEST };
+};
+
 export const userLoginSuccess = (user) => {
 	return { type: LOGIN_SUCCESS, payload: user };
 };
@@ -53,19 +62,20 @@ export const userLoginFailed = (error) => {
 };
 
 export const login = (user) => async (dispatch) => {
+	dispatch(userLoginRequest());
 	try {
 		const response = await axiosInstance.post("/users/login", user);
 
 		dispatch(userLoginSuccess(response.data));
 	} catch (error) {
 		const errors = error.response.data.errors;
-		const err = error.response.data.error;
+		const err = error.response.data.message;
 
 		if (errors) {
-			errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+			errors.forEach((error) => dispatch(setAlert(error.msg, "login")));
 		} else if (err) {
-			dispatch(setAlert(err, "danger"));
-		}	
+			dispatch(setAlert(err, "login"));
+		}
 		dispatch(userLoginFailed(error.response.data));
 	}
 };
