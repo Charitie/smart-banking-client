@@ -1,5 +1,6 @@
 import { axiosInstance } from "../../util/axiosInstance";
 import {
+	CLEAR_ERROR,
 	DEPOSIT_FAIL,
 	DEPOSIT_SUCCESS,
 	GET_BALANCE_FAILED,
@@ -9,16 +10,28 @@ import {
 	WITHDRAWAL_FAIL,
 	WITHDRAWAL_SUCCESS,
 } from "./types";
-import { setAlert } from "./alertaction";
+import {
+	openDepositModal,
+	openTransferModal,
+	openWithdrawModal,
+} from "./modalActions";
+
+//clear error
+export const clearError = () => {
+	return {
+		type: CLEAR_ERROR,
+	};
+};
 
 //deposit
 export const depositSuccess = (amount) => {
 	return { type: DEPOSIT_SUCCESS, payload: amount };
 };
 
-export const depositFailed = () => {
+export const depositFailed = (error) => {
 	return {
 		type: DEPOSIT_FAIL,
+		payload: error,
 	};
 };
 
@@ -28,12 +41,17 @@ export const deposit = (amount) => {
 			const response = await axiosInstance.post("/accounts/deposit", amount);
 
 			dispatch(depositSuccess(response.data));
+			dispatch(openDepositModal());
 		} catch (error) {
-			const errors = error.response.data.errors;
-			if (errors) {
-				errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
-				dispatch(depositFailed(error.response.data));
-			}
+			dispatch(
+				depositFailed({
+					message: error.response.data.message,
+					type: "deposit",
+				})
+			);
+			setTimeout(() => {
+				dispatch(clearError());
+			}, 5000);
 		}
 	};
 };
@@ -43,9 +61,10 @@ export const withdrawSuccess = (amount) => {
 	return { type: WITHDRAWAL_SUCCESS, payload: amount };
 };
 
-export const withdrawFailed = () => {
+export const withdrawFailed = (error) => {
 	return {
 		type: WITHDRAWAL_FAIL,
+		payload: error,
 	};
 };
 
@@ -55,43 +74,60 @@ export const withdraw = (amount) => {
 			const response = await axiosInstance.post("/accounts/withdraw", amount);
 
 			dispatch(withdrawSuccess(response.data));
+			dispatch(openWithdrawModal());
 		} catch (error) {
-			const errors = error.response.data.errors;
-			if (errors) {
-				errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
-				dispatch(withdrawFailed(error.response.data));
-			}
+			dispatch(
+				withdrawFailed({
+					message: error.response.data.message,
+					type: "withdraw",
+				})
+			);
+			setTimeout(() => {
+				dispatch(clearError());
+			}, 5000);
 		}
 	};
 };
 
 //transfer
-export const transferSuccess = (accountNumber, amount) => {
-	return { type: TRANSFER_SUCCESS, payload: { accountNumber, amount } };
+export const transferSuccess = (transfer) => {
+	return { type: TRANSFER_SUCCESS, payload: transfer };
 };
 
-export const transferFailed = () => {
+export const transferFailed = (error) => {
 	return {
 		type: TRANSFER_FAIL,
+		payload: error,
 	};
 };
 
-export const transfer = (accountNumber, amount) => {
+export const transfer = (transfer) => {
 	return async (dispatch) => {
 		try {
-			const response = await axiosInstance.post(
-				"/accounts/transfer",
-				accountNumber,
-				amount
-			);
+			const response = await axiosInstance.post("/accounts/transfer", transfer);
 
 			dispatch(transferSuccess(response.data));
+			dispatch(openTransferModal());
 		} catch (error) {
 			const errors = error.response.data.errors;
+			const err = error.response.data.message;
+
 			if (errors) {
-				errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
-				dispatch(transferFailed(error.response.data));
+				errors.forEach((error) =>
+					dispatch(transferFailed({ message: error.msg, type: "transfer" }))
+				);
 			}
+			if (err) {
+				dispatch(
+					transferFailed({
+						message: error.response.data.message,
+						type: "transfer",
+					})
+				);
+			}
+			setTimeout(() => {
+				dispatch(clearError());
+			}, 5000);
 		}
 	};
 };
@@ -101,9 +137,10 @@ export const getBalanceSuccess = (balance) => {
 	return { type: GET_BALANCE_SUCCESS, payload: balance };
 };
 
-export const getBalanceFailed = () => {
+export const getBalanceFailed = (error) => {
 	return {
 		type: GET_BALANCE_FAILED,
+		payload: error,
 	};
 };
 
@@ -113,11 +150,7 @@ export const getBalance = () => {
 			const response = await axiosInstance.get("/accounts/balance");
 			dispatch(getBalanceSuccess(response.data.balance));
 		} catch (error) {
-			const errors = error.response.data.errors;
-			if (errors) {
-				errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
-				dispatch(getBalanceFailed(error.response.data));
-			}
+			dispatch(getBalanceFailed(error.response.data));
 		}
 	};
 };
