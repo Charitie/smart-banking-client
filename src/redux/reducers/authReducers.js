@@ -1,4 +1,6 @@
 import {
+	LOGIN_REQUEST,
+	REGISTER_REQUEST,
 	REGISTER_SUCCESS,
 	REGISTER_FAIL,
 	LOGIN_SUCCESS,
@@ -8,23 +10,30 @@ import {
 
 const initialState = {
 	token: localStorage.getItem("smartbankingtoken"),
-	user: JSON.parse( localStorage.getItem("smartbankingUser")),
+	user: JSON.parse(localStorage.getItem("smartbankingUser")),
 	isAuthenticated: null,
-	loading: true,
+	loading: false,
+	error: null,
 };
 
 export default function (state = initialState, action) {
 	const { type, payload } = action;
 
-  switch (type) {
-    case REGISTER_SUCCESS:
-      case LOGIN_SUCCESS:
-        localStorage.setItem("smartbankingtoken", payload.token);
-       
-			localStorage.setItem("smartbankingUser", JSON.stringify({
-				email: payload.email,
-				fullname: payload.fullname,
-			}));
+	switch (type) {
+		case LOGIN_REQUEST:
+		case REGISTER_REQUEST:
+			return { ...state, loading: true };
+		case REGISTER_SUCCESS:
+		case LOGIN_SUCCESS:
+			localStorage.setItem("smartbankingtoken", payload.token);
+
+			localStorage.setItem(
+				"smartbankingUser",
+				JSON.stringify({
+					email: payload.email,
+					fullname: payload.fullname,
+				})
+			);
 			return {
 				...state,
 				token: payload.token,
@@ -42,6 +51,7 @@ export default function (state = initialState, action) {
 				token: null,
 				isAuthenticated: false,
 				loading: false,
+				error: payload,
 			};
 		default:
 			return state;
