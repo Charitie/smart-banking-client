@@ -24,3 +24,21 @@
 		color: orangered;
 	}
 }
+
+@mixin user-profle {
+	
+		fill: $color-gold-light;
+		width: 15rem;
+		height: 15rem;
+		border-radius: 50%;
+		object-fit: cover;
+		border: 0.1rem solid $color-gold-light;
+		transition: all ease-in-out 0.5s;
+
+		&:hover {
+			width: 15.5rem;
+			height: 15.5rem;
+			box-shadow: 0 1rem 2rem rgba($color-black, 0.3);
+		}
+	
+}
