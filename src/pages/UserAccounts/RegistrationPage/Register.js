@@ -1,15 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link, Redirect } from "react-router-dom";
-import { Form } from "semantic-ui-react";
 import Alert from "../../../components/Alert/Alert";
+import Loader from '../../../assets/loader.gif';
 
-export const Register = ({
-	alerts,
-	register,
-	isAuthenticated,
-	loading,
-}) => {
+export const Register = ({ alerts, register, isAuthenticated, loading }) => {
 	const [formData, setFormData] = useState({
 		fullname: "",
 		email: "",
@@ -24,8 +19,10 @@ export const Register = ({
 		setFormData({ ...formData, [name]: value });
 	};
 
+	let errorphone;
 	const handleSubmit = (event) => {
 		event.preventDefault();
+
 		register({ fullname, email, phone, password });
 	};
 
@@ -35,12 +32,19 @@ export const Register = ({
 
 	return (
 		<div className='account-container'>
-			<Form
+			<form
 				onSubmit={handleSubmit}
-				loading={loading}
 				className='form form--register'>
 				<h2 className='form__title'>Create Your Account</h2>
-				{alerts !== null && alerts.length ? <Alert alert={alerts[0]} /> : null}
+
+				{loading ? <img className='loader' src={Loader} alt="loader" /> : null}
+
+				{alerts.length ? (
+					alerts[0].alertType === "register" ? (
+						<Alert alert={alerts[0]} />
+					) : null
+				) : null}
+
 				<div className='form__group'>
 					<label className='form__label'>Full Name</label>
 					<input
@@ -66,15 +70,16 @@ export const Register = ({
 					/>
 				</div>
 				<div className='form__group'>
+					{errorphone}
 					<label className='form__label'>Phone Number</label>
 					<input
 						className='form__input'
 						type='text'
+						pattern='^\+?([0-9]{3})\)?([0-9]{9})$'
 						name='phone'
-						placeholder='Phone Number'
+						placeholder='+254*********'
 						value={phone}
 						onChange={handleChange}
-						minLength={10}
 						required
 					/>
 				</div>
@@ -100,7 +105,7 @@ export const Register = ({
 						</Link>
 					</p>
 				</div>
-			</Form>
+			</form>
 		</div>
 	);
 };

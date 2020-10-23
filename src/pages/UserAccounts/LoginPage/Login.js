@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Form } from "semantic-ui-react";
 import Alert from "../../../components/Alert/Alert";
+import Loader from '../../../assets/loader.gif';
 
 export const Login = ({ isAuthenticated, loading, alerts, login }) => {
-
 	const [formData, setFormData] = useState({ email: "", password: "" });
 
 	const { email, password } = formData;
@@ -26,12 +25,19 @@ export const Login = ({ isAuthenticated, loading, alerts, login }) => {
 
 	return (
 		<div className='account-container'>
-			<Form
+			<form
 				onSubmit={handleSubmit}
-				loading={loading}
 				className='form form--login'>
 				<h2 className='form__title'>Login To Your Account</h2>
-				{alerts.length ? <Alert alert={alerts[0]} /> : null}
+
+				{loading ? <img className='loader' src={Loader} alt="loader" /> : null}
+
+				{alerts.length ? (
+					alerts[0].alertType === "login" ? (
+						<Alert alert={alerts[0]} />
+					) : null
+				) : null}
+
 				<div className='form__group'>
 					<label className='form__label'>Email</label>
 					<input
@@ -65,7 +71,7 @@ export const Login = ({ isAuthenticated, loading, alerts, login }) => {
 						</Link>{" "}
 					</p>
 				</div>
-			</Form>
+			</form>
 		</div>
 	);
 };
