@@ -6,6 +6,8 @@ import {
 	WITHDRAWAL_FAIL,
 	TRANSFER_FAIL,
 	GET_BALANCE_SUCCESS,
+	CLEAR_ERROR,
+	GET_BALANCE_FAILED,
 } from "../actions/types";
 
 const initialState = {
@@ -13,9 +15,9 @@ const initialState = {
 	amount: 0,
 	accountNumber: "",
 	balance: 0,
-	error: null,
+	message: "",
+	error: {},
 };
-
 export default function (state = initialState, action) {
 	const { type, payload } = action;
 
@@ -24,14 +26,18 @@ export default function (state = initialState, action) {
 		case WITHDRAWAL_SUCCESS:
 			return {
 				...state,
-				amount: payload,
+				amount: payload.amount,
+				balance: payload.newBalance,
+				message: payload.message,
 				loading: false,
 			};
 		case TRANSFER_SUCCESS:
 			return {
 				...state,
-				amount: payload,
-				accountNumber: payload,
+				amount: payload.amountTransfered,
+				balance:payload.balance,
+				accountNumber: payload.accountNumber,
+				message: payload.message,
 				loading: false,
 			};
 		case GET_BALANCE_SUCCESS:
@@ -42,10 +48,16 @@ export default function (state = initialState, action) {
 		case DEPOSIT_FAIL:
 		case WITHDRAWAL_FAIL:
 		case TRANSFER_FAIL:
+		case GET_BALANCE_FAILED:
 			return {
 				...state,
 				error: payload,
 				loading: false,
+			};
+		case CLEAR_ERROR:
+			return {
+				...state,
+				error: null,
 			};
 		default:
 			return state;
