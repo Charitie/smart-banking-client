@@ -12,7 +12,7 @@ const Sidebar = ({
 	close,
 	open,
 	logout,
-	user: { email, fullname },
+	user: { email, fullname, accountNumber },
 	balance
 }) => {
 	let classes = "mobile-sidebar";
@@ -34,6 +34,7 @@ const Sidebar = ({
 					<div className='user-details'>
 						<span>{fullname}</span>
 						<span>{email}</span>
+						<span><b>Acc: </b>{accountNumber}</span>
 					</div>
 				</div>
 			</div>

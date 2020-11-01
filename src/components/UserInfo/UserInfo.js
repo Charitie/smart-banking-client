@@ -3,7 +3,8 @@ import "./UserInfo.scss";
 import { connect } from "react-redux";
 import { ReactComponent as UserProfile } from "../../assets/SVG/user.svg";
 
-const UserInfo = ({ user: { email, fullname } }) => {
+const UserInfo = ({ user: { email, fullname,accountNumber } }) => {
+	console.log(accountNumber)
 	return (
 		<div className='home__user-info'>
 			<h2>Account Profile</h2>
@@ -16,6 +17,9 @@ const UserInfo = ({ user: { email, fullname } }) => {
 				</span>
 				<span>
 					<b>Email: </b> {email}
+				</span>
+				<span>
+					<b>Account no: </b> {accountNumber}
 				</span>
 			</div>
 		</div>

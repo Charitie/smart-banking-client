@@ -32,12 +32,17 @@ export default function (state = initialState, action) {
 				JSON.stringify({
 					email: payload.email,
 					fullname: payload.fullname,
+					accountNumber: payload.accountNumber,
 				})
 			);
 			return {
 				...state,
 				token: payload.token,
-				user: { email: payload.email, fullname: payload.fullname },
+				user: {
+					email: payload.email,
+					fullname: payload.fullname,
+					accountNumber: payload.accountNumber,
+				},
 				isAuthenticated: true,
 				loading: false,
 			};
