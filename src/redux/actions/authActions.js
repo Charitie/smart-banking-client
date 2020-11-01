@@ -30,8 +30,7 @@ export const register = (user) =>  async (dispatch) => {
 		dispatch(userRegisterRequest())
 		try {
 			const response = await axiosInstance.post("/users/register", user);
-
-			dispatch(userRegisterSuccess(response.data.user));
+			dispatch(userRegisterSuccess(response.data));
 		} catch (error) {
 			const errors = error.response.data.errors;
 			const err = error.response.data.message;
